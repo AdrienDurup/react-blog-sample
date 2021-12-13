@@ -1,0 +1,21 @@
+@use 'src/styles/vars';
+
+.posts {
+  max-width: 800px;
+  margin: vars.$gutter auto;
+
+  &-title {
+    color: vars.$primary-color;
+    font-family: vars.$title-font;
+    font-weight: vars.$title-font-weight;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 0.5em;
+  }
+
+  &-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}

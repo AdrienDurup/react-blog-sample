@@ -1,0 +1,37 @@
+@use 'sass:color';
+@use 'src/styles/vars';
+
+.menu {
+  text-align: center;
+  padding: vars.$gutter;
+  border-bottom: 1px solid vars.$alt-color;
+
+  &-link {
+    margin: 0 1rem;
+    cursor: pointer;
+    color: vars.$dark-color;
+
+    &--selected {
+      text-decoration: underline;
+    }
+
+    &:hover {
+      color: vars.$primary-color;
+    }
+  }
+
+  &-btn {
+    background-color: vars.$primary-color;
+    border: 0;
+    color: vars.$light-color;
+    padding: 5px;
+    border-radius: 3px;
+    margin: 0 1rem;
+    display: inline-block;
+    min-width: 12em;
+
+    &:hover {
+      background-color: color.scale(vars.$primary-color, $lightness: -10%);
+    }
+  }
+}

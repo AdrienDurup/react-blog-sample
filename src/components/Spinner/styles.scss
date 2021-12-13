@@ -1,0 +1,21 @@
+@use 'src/styles/vars';
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  background-color: vars.$primary-color;
+  margin: vars.$gutter auto;
+  animation: rotateplane 1.5s infinite ease-in-out;
+}
+
+@keyframes rotateplane {
+  0% {
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+  }
+  50% {
+    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+  }
+  100% {
+    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+  }
+}
