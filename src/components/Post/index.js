@@ -1,11 +1,18 @@
 import './styles.scss';
+import PropTypes from 'prop-types';
 
-const Post = () => (
-  <article className="post">
-    <h2 className="post-title">Titre du post</h2>
-    <div className="post-category">tag</div>
-    <p className="post-excerpt">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed mollitia ad incidunt cum sunt voluptatum, fuga quos vero aliquid veniam.</p>
+const Post = ({ title, category, excerpt, isZen }) => (
+  <article className={isZen ? 'post --is-zen' : 'post'}>
+    <h2 className="post-title">{title}</h2>
+    <div className="post-category">{category}</div>
+    <p className="post-excerpt">{excerpt}</p>
   </article>
 );
+Post.propTypes = {
+  title: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
+  excerpt: PropTypes.string.isRequired,
+  isZen: PropTypes.bool.isRequired,
+};
 
 export default Post;

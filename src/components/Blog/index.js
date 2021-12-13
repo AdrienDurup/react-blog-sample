@@ -1,3 +1,6 @@
+// REACT
+import { useState } from 'react';
+
 // Composants
 import Header from 'src/components/Header';
 import Posts from 'src/components/Posts';
@@ -10,13 +13,15 @@ import './styles.scss';
 
 // == Composant
 const Blog = () => {
-  console.log(categoriesData);
-  console.log(postsData);
+  const [state, setState] = useState({
+    isZen: false,
+  });
+  const { isZen } = state;
 
   return (
     <div className="blog">
-      <Header />
-      <Posts />
+      <Header categories={categoriesData} mainState={[state, setState]} />
+      <Posts posts={postsData} isZen={isZen} />
       <Footer />
     </div>
   );
