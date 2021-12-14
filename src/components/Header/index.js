@@ -1,6 +1,7 @@
+import { Link } from "react-router-dom";
 import './styles.scss';
 
-const Header = ({ categories, mainState }) => {
+const Header = ({ mainState, routes }) => {
   const [state, setMainState] = mainState;
   const { isZen } = state;
   const changeMode = () => {
@@ -11,10 +12,12 @@ const Header = ({ categories, mainState }) => {
     <header className="menu">
       <nav>
         {
-          categories.map((el) => {
-            const { route, label } = el;
+          routes.map((el) => {
+            const { key,path } = el;
             return (
-              <a className="menu-link menu-link--selected" href={route} key={label}>{label}</a>
+              <Link className="menu-link menu-link--selected" to={path} key={key}>
+                {key}
+              </Link>// <a className="menu-link menu-link--selected" href={route}>{label}</a>
             );
           })
         }

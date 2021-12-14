@@ -48,8 +48,10 @@
     "webpack-merge": "*"
   },
   "dependencies": {
+    "history": "5",
     "prop-types": "^15.7.2",
     "react": "*",
-    "react-dom": "*"
+    "react-dom": "*",
+    "react-router-dom": "6"
   }
 }

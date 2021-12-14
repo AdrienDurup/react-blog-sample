@@ -6,8 +6,8 @@ const Posts = ({ posts, isZen }) => {
   console.log('test', isZen);
   return (
     <main className="posts">
-      <h1 className="posts-title">Dev Of Thrones</h1>
-      <div className={isZen ? 'posts-list --column' : 'posts-list'}>
+      <h1 className={isZen ? 'posts-title --zen-mode' : 'posts-title'}>Dev Of Thrones</h1>
+      <div className={isZen ? 'posts-list --zen-mode' : 'posts-list'}>
         {posts.map((el) => (
           <Post {...el} key={el.id} isZen={isZen} />
         ))}
