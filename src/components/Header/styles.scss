@@ -11,6 +11,10 @@
     cursor: pointer;
     color: vars.$dark-color;
 
+    &.active{
+      text-decoration: underline 1px;
+    }
+
     &--selected {
       text-decoration: underline;
     }

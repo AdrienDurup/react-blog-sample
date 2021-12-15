@@ -6,6 +6,10 @@
   background-color: vars.$primary-color;
   margin: vars.$gutter auto;
   animation: rotateplane 1.5s infinite ease-in-out;
+
+  &.--loaded{
+    display: none;
+  }
 }
 
 @keyframes rotateplane {
