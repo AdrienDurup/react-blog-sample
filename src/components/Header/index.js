@@ -21,7 +21,7 @@ const Header = ({ mainState, routes }) => {
             );
           })
         }
-        <button className="menu-btn" type="button" onClick={changeMode}>Activer le mode zen</button>
+        <button className="menu-btn" type="button" onClick={changeMode}>{isZen?"Désactiver":"Activer"} le mode zen</button>
       </nav>
     </header>
   );
