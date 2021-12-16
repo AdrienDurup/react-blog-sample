@@ -1,16 +1,19 @@
 import { Link, NavLink } from "react-router-dom";
+import Spinner from "../Spinner";
 import './styles.scss';
 
-const Header = ({ isZenState, isLoadingState, routes }) => {
+const Header = ({ isZenState, isLoading, setActiveCategory, routes }) => {
   const [isZen, setIsZen] = isZenState;
-  const [isLoading, setIsLoading] = isLoadingState;
   const changeMode = () => {
     setIsZen(!isZen);
   };
-  const activateLoadingSpinner = (e) => {
-   // e.preventDefault();
-    setIsLoading(true);
+
+  const setHandler = (cat) => () => {
+    //setIsLoading(true);
+    setActiveCategory(cat);
   };
+  if(isLoading)return <Spinner />;
+
   return (
     <header className="menu">
       <nav>
@@ -18,7 +21,7 @@ const Header = ({ isZenState, isLoadingState, routes }) => {
           routes.map((el) => {
             const { route, label } = el;
             return (
-              <NavLink className="menu-link" to={route} key={label} onClick={activateLoadingSpinner}>
+              <NavLink className="menu-link" to={route} key={label} onClick={setHandler(el)}>
                 {label}
               </NavLink>// <a className="menu-link menu-link--selected" href={route}>{label}</a>
             );

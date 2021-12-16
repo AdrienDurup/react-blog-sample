@@ -4,6 +4,14 @@
   width: 100%;
   padding: vars.$gutter;
 
+  & strong {
+    font-weight: 700;
+  }
+
+  & em {
+    font-style: italic;
+  }
+
   @media (min-width: 600px) {
     width: 50%;
     &.--zen-mode{

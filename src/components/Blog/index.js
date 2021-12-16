@@ -14,9 +14,10 @@ import Footer from 'src/components/Footer';
 import NotFound from 'src/components/NotFound';
 import FullPost from '../FullPost';
 import Spinner from '../Spinner';
+import ErrorBoundary from '../ErrorBoundary';
 
 // data, styles et utilitaires
-import postsData from 'src/data/posts';
+import useAjax from '../../hooks';
 
 import './styles.scss';
 import hostAPI from '../../data/hostAPI';
@@ -26,84 +27,92 @@ import hostAPI from '../../data/hostAPI';
 const Blog = () => {
   /* used fer zen mode */
   const [isZen, setIsZen] = useState(false);
+
   /* used for spinner state */
-  const [isLoading, setIsLoading] = useState(false);
-  /* categories used for generating nav */
-  const [categories, setCategories] = useState([]);
+  const [postsLoading, setPostsLoading] = useState(false);
+
+  // const [categories, setCategories] = useState([]);
+
   /* all posts, for the moment */
   const [currentPosts, setCurrentPosts] = useState([]);
+  const [activeCategory, setActiveCategory] = useState({ label: 'Accueil', id: 1 });//active category at start
+
+  /* Ajax handling */
+  /* categories used for generating nav */
+  const [categories, isCategoryLoading] = useAjax(`${hostAPI}/categories`);
+
+  /* get posts */
+  // const [categories, isLoading] = useAjax(`${hostAPI}/posts/category/${id}`);
 
   useEffect(async () => {
-    try {
-      if (categories.length === 0) {
-        const cat = await getCategories();
-        setCategories(cat);
-      };
-    }
-    catch (e) {
-      console.error(e);
-    };
-  });
+    getpostsFromAPI(activeCategory);
+  }, [activeCategory]);
 
-  useEffect(async () => {
+  const getpostsFromAPI = async (cat) => {
+    const { label, id } = cat;
+    let res = [];
     try {
-      if (isLoading) {
-        // await setTimeout(async () => {
-        let posts = await getpostsFromAPI();
-        setCurrentPosts(posts);
-        setIsLoading(false);
-        // }, 500);
+      if (label === 'Accueil') {
+        res = await axios.get(`${hostAPI}/posts`);
       }
+      else {
+        res = await axios.get(`${hostAPI}/posts/category/${id}`);
+      };
+      res = res.data;
+      console.log("currentposts", res);
+      setCurrentPosts(res);
     }
     catch (e) {
       console.error(e);
-    };
-  });
-
-  async function getCategories() {
-    let cat = [];
-    cat = await axios.get(`${hostAPI}/categories`);
-    return cat.data;
-  }
-
-  const getpostsFromAPI = async () => {
-    // const getpostsFromAPI = async (label) => {
-    // requete axios
-    const res = await axios.get(`${hostAPI}/posts`);
-    // let res = [];
-    // if (label === 'Accueil') {
-    //   res = await axios.get(`${hostAPI}/posts`);
-    // }
-    // else {
-    //   res = await axios.get(`${hostAPI}/posts/category/${1}`);
-    // };
-    // console.log("request", res.data);
-    // currentPosts = res.data;
-    return res.data;
-  }
-
-  const getFilteredPosts = (cat) => {
-    const filtered = currentPosts.filter((el) => el.category_id === cat.id);
-    /* if can’t find an article relative to asked category, return all */
-    return filtered.length !== 0 ? filtered : currentPosts;
+    }
+    finally {
+      setPostsLoading(false);
+    }
+    //const res = await axios.get(`${hostAPI}/posts`);
   };
 
-  console.log("categories", categories, "isZen", isZen);
+  // const getFilteredPosts = (cat) => {
+  //   const filtered = currentPosts.filter((el) => el.category_id === cat.id);
+  //   /* if can’t find an article relative to asked category, return all */
+  //   return filtered.length !== 0 ? filtered : currentPosts;
+  // };
 
-  if (!categories) return <Spinner isLoading={isLoading} />;
+  console.log("categories", categories, isCategoryLoading);
+
+  if (isCategoryLoading) return <Spinner />;
 
   return (
     <div className="blog">
-      <Header routes={categories} isZenState={[isZen, setIsZen]} isLoadingState={[isLoading, setIsLoading]} />
-      <Routes>
-        {categories.map((el) => (
-          <Route path={el.route} key={el.label} element={
-            <Posts category={el} posts={getFilteredPosts(el)} isZen={isZen} isLoading={isLoading} getPosts={getpostsFromAPI} setPosts={setCurrentPosts} />} />
-        ))}
-        <Route path="posts/:id" element={<FullPost />} />
-        <Route path="/jquery" element={<Navigate replace to="/react" />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <ErrorBoundary>
+        <Header
+          routes={categories}
+          isZenState={[isZen, setIsZen]}
+          isLoading={isCategoryLoading}
+          setActiveCategory={setActiveCategory}
+        />
+        <Routes>
+          {categories.map((el) => (
+            <Route
+              path={el.route}
+              key={el.label}
+              element={(
+                <Posts
+                  categories={categories}
+                  posts={currentPosts}
+                  isZen={isZen}
+                  isLoading={postsLoading}
+                // getPosts={getpostsFromAPI}
+                // setPosts={setCurrentPosts}
+                />
+              )}
+
+            />
+          ))}
+          <Route path="posts/:id" element={<FullPost />} />
+          <Route path="/jquery" element={<Navigate replace to="/react" />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </ErrorBoundary>
       <Footer />
     </div>
   );
@@ -111,3 +120,5 @@ const Blog = () => {
 
 // == Export
 export default Blog;
+
+//isLoadingState={[isLoading, setIsLoading]}
