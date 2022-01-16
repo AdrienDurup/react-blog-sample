@@ -41,9 +41,6 @@ const Blog = () => {
   /* categories used for generating nav */
   const [categories, isCategoryLoading] = useAjax(`${hostAPI}/categories`);
 
-  /* get posts */
-  // const [categories, isLoading] = useAjax(`${hostAPI}/posts/category/${id}`);
-
   useEffect(async () => {
     getpostsFromAPI(activeCategory);
   }, [activeCategory]);
@@ -71,12 +68,6 @@ const Blog = () => {
     //const res = await axios.get(`${hostAPI}/posts`);
   };
 
-  // const getFilteredPosts = (cat) => {
-  //   const filtered = currentPosts.filter((el) => el.category_id === cat.id);
-  //   /* if can’t find an article relative to asked category, return all */
-  //   return filtered.length !== 0 ? filtered : currentPosts;
-  // };
-
   console.log("categories", categories, isCategoryLoading);
 
   if (isCategoryLoading) return <Spinner />;
@@ -97,8 +88,10 @@ const Blog = () => {
               key={el.label}
               element={(
                 <Posts
+                  activeCategory={activeCategory}
                   categories={categories}
                   posts={currentPosts}
+                  setActiveCategory={setActiveCategory}
                   isZen={isZen}
                   isLoading={postsLoading}
                 // getPosts={getpostsFromAPI}
