@@ -8,7 +8,7 @@ export default [
     label: 'Angular',
   },
   {
-    route: '/react',
+    route: './react',
     label: 'React',
   },
   {

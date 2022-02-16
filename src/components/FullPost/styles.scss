@@ -12,8 +12,7 @@
     text-align: center;
     font-size: 2em;
     margin-bottom: 0.5em;
-
-    &.--zen-mode {
+    &.--zen-mode{
       font-size: 2.4rem;
     }
   }
@@ -22,8 +21,7 @@
   &-list {
     display: flex;
     flex-wrap: wrap;
-
-    &.--zen-mode {
+    &.--zen-mode{
       flex-flow: column nowrap;
       font-size: 1.4rem;
     }
