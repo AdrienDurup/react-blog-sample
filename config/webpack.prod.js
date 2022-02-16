@@ -5,6 +5,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const { BundleStatsWebpackPlugin } = require('bundle-stats-webpack-plugin');
+const dotenv = require('dotenv-flow').config( {
+  path: '../.env.prod'
+});
 
 module.exports = merge(common, {
   mode: 'production',
@@ -18,6 +21,9 @@ module.exports = merge(common, {
     }),
     // Stats bundle
     new BundleStatsWebpackPlugin(),
+    new webpack.DefinePlugin( {
+      "process.env": JSON.stringify(dotenv.parsed)
+    }),
   ],
   module: {
     rules: [

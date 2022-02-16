@@ -2,7 +2,9 @@ const paths = require('./paths');
 const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
-
+const dotenv = require('dotenv-flow').config( {
+  path: '../.env.dev'
+});
 const port = 8080;
 
 module.exports = merge(common, {
@@ -14,6 +16,9 @@ module.exports = merge(common, {
   plugins: [
     // Recharge uniquement ce qu'il y a besoin
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin( {
+      "process.env": JSON.stringify(dotenv.parsed)
+    }),
   ],
   module: {
     rules: [
