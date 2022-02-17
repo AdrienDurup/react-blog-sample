@@ -1,3 +1,6 @@
+// SYS
+// import process from 'process';
+
 // REACT
 import { useState, useEffect } from 'react';
 
@@ -91,23 +94,27 @@ const Blog = () => {
           setActiveCategory={setActiveCategory}
         />
         <Routes>
-          {categories.map((el) => (
-            <Route
-              path={el.route}
-              key={el.label}
-              element={(
-                <Posts
-                  categories={categories}
-                  posts={currentPosts}
-                  isZen={isZen}
-                  isLoading={postsLoading}
-                // getPosts={getpostsFromAPI}
-                // setPosts={setCurrentPosts}
-                />
-              )}
+          {categories.map((el) => {
+            console.log("process",process.env.MY_APP_ROOT);
+            return (
+              <Route
+                // path={`${process.env.MY_APP_ROOT}/${el.route}`}
+                path={el.route}
+                key={el.label}
+                element={(
+                  <Posts
+                    categories={categories}
+                    posts={currentPosts}
+                    isZen={isZen}
+                    isLoading={postsLoading}
+                  // getPosts={getpostsFromAPI}
+                  // setPosts={setCurrentPosts}
+                  />
+                )}
 
-            />
-          ))}
+              />
+            )
+          })}
           <Route path="posts/:id" element={<FullPost />} />
           <Route path="/jquery" element={<Navigate replace to="/react" />} />
           <Route path="*" element={<NotFound />} />

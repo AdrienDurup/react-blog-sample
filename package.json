@@ -25,6 +25,7 @@
     "css-minimizer-webpack-plugin": "*",
     "cssnano": "*",
     "dotenv-flow": "*",
+    "dotenv-flow-webpack": "^1.1.0",
     "eslint": "*",
     "eslint-config-airbnb": "*",
     "eslint-import-resolver-alias": "*",

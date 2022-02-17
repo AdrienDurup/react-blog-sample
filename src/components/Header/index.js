@@ -20,8 +20,9 @@ const Header = ({ isZenState, isLoading, setActiveCategory, routes }) => {
         {
           routes.map((el) => {
             const { route, label } = el;
+            console.log(`${route}`);
             return (
-              <NavLink className="menu-link" to={route} key={label} onClick={setHandler(el)}>
+              <NavLink className="menu-link" to={`${route}`} key={label} onClick={setHandler(el)}>
                 {label}
               </NavLink>// <a className="menu-link menu-link--selected" href={route}>{label}</a>
             );
